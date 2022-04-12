@@ -12,7 +12,7 @@ import com.example.desafio.data.model.UserModel
 import com.example.desafio.data.model.PullRequestModel
 import com.example.desafio.R
 
-class RPAdapter(var pullList: ArrayList<PullRequestModel>, private val ctx: Context,
+class RPAdapter(var pullList: List<PullRequestModel>, private val ctx: Context,
                 val PullOnClickListener: OnPullClickListener
 ): RecyclerView.Adapter<RPAdapter.MyViewHolder>() {
 
