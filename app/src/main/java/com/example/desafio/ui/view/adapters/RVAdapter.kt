@@ -1,4 +1,4 @@
-package com.example.desafio
+package com.example.desafio.ui.view.adapters
 
 
 import android.content.Context
@@ -9,10 +9,13 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.example.desafio.data.model.RepositoriesModel
+import com.example.desafio.R
 
 
-class RVAdapter(var userList: ArrayList<RecyclerData>,  private val ctx: Context,
-                 val RepositoryOnClickListener:OnRepoClickListener): RecyclerView.Adapter<RVAdapter. MyViewHolder>() {
+class RVAdapter(var userList: List<RepositoriesModel>, private val ctx: Context,
+                val RepositoryOnClickListener: OnRepoClickListener
+): RecyclerView.Adapter<RVAdapter.MyViewHolder>() {
 
 
 interface OnRepoClickListener{
@@ -20,21 +23,21 @@ interface OnRepoClickListener{
 }
 
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RVAdapter.MyViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
        val inflater = LayoutInflater.from(parent.context).inflate(R.layout.rvrow,parent,false)
 
         return MyViewHolder(inflater)
     }
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
-       val datos: RecyclerData = userList[position]
+       val datos: RepositoriesModel = userList[position]
         holder.Tittle.text = datos.name
         holder.Descripcion.text = datos.description
         holder.Fork.text = datos.forks_count
         holder.Star.text = datos.stargazers_count
-        holder.Usser.text = datos.owner.login
-        holder.itemView.setOnClickListener{RepositoryOnClickListener.onRepoClick(datos.owner.login, datos.name)}
-       val urlimage = datos.owner.name
+        holder.Usser.text = datos.userModel.login
+        holder.itemView.setOnClickListener{RepositoryOnClickListener.onRepoClick(datos.userModel.login, datos.name)}
+       val urlimage = datos.userModel.name
             Glide.with(holder.image)
                 .load(urlimage)
                 .circleCrop()

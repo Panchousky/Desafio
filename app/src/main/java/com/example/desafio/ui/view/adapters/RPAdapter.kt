@@ -1,4 +1,4 @@
-package com.example.desafio
+package com.example.desafio.ui.view.adapters
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -8,30 +8,33 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.example.desafio.data.model.UserModel
+import com.example.desafio.data.model.PullRequestModel
+import com.example.desafio.R
 
-class RPAdapter(var pullList: ArrayList<RepositoryPulls>,  private val ctx: Context,
-                val PullOnClickListener: RPAdapter.OnPullClickListener
-): RecyclerView.Adapter<RPAdapter. MyViewHolder>() {
+class RPAdapter(var pullList: ArrayList<PullRequestModel>, private val ctx: Context,
+                val PullOnClickListener: OnPullClickListener
+): RecyclerView.Adapter<RPAdapter.MyViewHolder>() {
 
     interface OnPullClickListener{
-        fun onRepoClick(owner: Owner)
+        fun onRepoClick(userModel: UserModel)
     }
 
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RPAdapter.MyViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
         val inflater = LayoutInflater.from(parent.context).inflate(R.layout.pulrequestrow,parent,false)
 
         return MyViewHolder(inflater)
     }
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
-        val datos: RepositoryPulls = pullList[position]
+        val datos: PullRequestModel = pullList[position]
         holder.Tittle.text = datos.title
         holder.Descripcion.text = datos.body
-        holder.Usser.text = datos.owner.login
-        holder.SobrUsser.text = datos.owner.login
+        holder.Usser.text = datos.userModel.login
+        holder.SobrUsser.text = datos.userModel.login
 
-        val urlimage = datos.owner.name
+        val urlimage = datos.userModel.name
         Glide.with(holder.image)
             .load(urlimage)
             .circleCrop()

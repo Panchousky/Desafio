@@ -12,10 +12,10 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Desafio">
         <activity
-            android:name=".PullRequestActivity"
+            android:name="com.example.desafio.ui.view.PullRequestActivity"
             android:exported="false" />
         <activity
-            android:name=".MainActivity"
+            android:name="com.example.desafio.ui.view.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
