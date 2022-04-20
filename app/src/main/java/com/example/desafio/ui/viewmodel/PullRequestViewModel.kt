@@ -12,7 +12,7 @@ class PullRequestViewModel : ViewModel() {
     val getPullRequestUseCase = GetPullRequestUseCase()
 
 
-    fun onStart(user:String,repo:String) {
+    fun getPullRequestList(user:String, repo:String) {
         viewModelScope.launch {
             val result = getPullRequestUseCase(user, repo)
 

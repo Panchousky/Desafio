@@ -9,19 +9,14 @@ import retrofit2.http.Path
 
 interface RetrofitInstance {
 
-    /*@GET("search/repositories?q=language:Java&sort=stars")
-   fun getDataFromAPI():Call<RecyclerList>
-
-
-
-*/
     @GET("search/repositories?q=language:Java&sort=stars")
-    suspend fun getRepositories():Response<RecyclerList>
+    suspend fun getRepositories(): Response<RecyclerList>
 
     @GET("repos/{user}/{repo}/pulls")
     suspend fun getPullRequests(
-        @Path("user") user:String,
-        @Path("repo") repo:String)
+        @Path("user") user: String,
+        @Path("repo") repo: String
+    )
             : Response<List<PullRequestModel>>
 
 }

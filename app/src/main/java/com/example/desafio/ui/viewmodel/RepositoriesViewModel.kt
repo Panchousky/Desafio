@@ -7,12 +7,12 @@ import com.example.desafio.data.model.RepositoriesModel
 import com.example.desafio.domain.GetRepositoresUseCase
 import kotlinx.coroutines.launch
 
-class MainViewModel : ViewModel() {
+class RepositoriesViewModel : ViewModel() {
     val repoModel = MutableLiveData<List<RepositoriesModel>>()
     val getRepositoresUseCase = GetRepositoresUseCase()
 
 
-    fun onStart() {
+    fun getRepositoriesList() {
         viewModelScope.launch {
             val result = getRepositoresUseCase()
 
