@@ -10,18 +10,20 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.desafio.data.model.RepositoriesModel
 import com.example.desafio.R
+import com.example.desafio.ui.view.RepositoriesActivity
 
 
 class RepositoriesListRvAdapter(
-    private val onRepoClickListener: OnRepoClickListener
+    private val onClickItem: RepositoriesActivity.RepositoriesManager
 ) : RecyclerView.Adapter<RepositoriesListRvAdapter.MyViewHolder>() {
-private val list = mutableListOf<RepositoriesModel>()
 
-    interface OnRepoClickListener {
-        fun onRepoClick(owner: String, full_name: String)
+    private val list = mutableListOf<RepositoriesModel>()
+
+    interface onClickItemListener {
+        fun onItemClick(owner: String, full_name: String)
     }
 
-    fun setList(items:List<RepositoriesModel>){
+    fun setList(items: List<RepositoriesModel>) {
         list.clear()
         list.addAll(items)
         notifyDataSetChanged()
@@ -40,7 +42,7 @@ private val list = mutableListOf<RepositoriesModel>()
         holder.render(list[position])
 
         holder.itemView.setOnClickListener {
-            onRepoClickListener.onRepoClick(
+            onClickItem.onItemClick(
                 list[position].userModel.login,
                 list[position].name
             )
@@ -50,12 +52,12 @@ private val list = mutableListOf<RepositoriesModel>()
 
     class MyViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
-        private val tittle: TextView by lazy { tittle }
-        private val description: TextView by lazy { description }
-        private val fork: TextView by lazy { fork }
-        private val star: TextView by lazy { star }
-        private val user: TextView by lazy { user }
-        private val image: ImageView by lazy { image }
+        private val tittle: TextView by lazy { view.findViewById(R.id.Tittle) }
+        private val description: TextView by lazy { view.findViewById(R.id.Description) }
+        private val fork: TextView by lazy { view.findViewById(R.id.forks) }
+        private val star: TextView by lazy { view.findViewById(R.id.stars) }
+        private val user: TextView by lazy { view.findViewById(R.id.nmbreusser) }
+        private val image: ImageView by lazy { view.findViewById(R.id.usserimage) }
 
         fun render(repositoriesModel: RepositoriesModel) {
 

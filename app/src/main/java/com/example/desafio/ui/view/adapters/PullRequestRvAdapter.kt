@@ -10,13 +10,23 @@ import com.bumptech.glide.Glide
 import com.example.desafio.data.model.UserModel
 import com.example.desafio.data.model.PullRequestModel
 import com.example.desafio.R
+import com.example.desafio.ui.view.PullRequestActivity
 
-class PullRequestRvAdapter(private val pullList: List<PullRequestModel>) :
+class PullRequestRvAdapter(
+    private val onClickItem: PullRequestActivity.PullRequestManager
+) :
     RecyclerView.Adapter<PullRequestRvAdapter.MyViewHolder>() {
 
+    private val listPullRequest = mutableListOf<PullRequestModel>()
 
-    interface OnPullClickListener {
-        fun onRepoClick(userModel: UserModel)
+    interface pullItemClick {
+        fun pullClick()
+    }
+
+    fun setListPullRequest(items: List<PullRequestModel>){
+        listPullRequest.clear()
+        listPullRequest.addAll(items)
+        notifyDataSetChanged()
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
@@ -27,29 +37,31 @@ class PullRequestRvAdapter(private val pullList: List<PullRequestModel>) :
     }
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
-        holder.render(pullList[position])
-
+        holder.render(listPullRequest[position])
+        holder.itemView.setOnClickListener {
+            onClickItem.pullClick()
+        }
 
     }
 
     override fun getItemCount(): Int {
-        return pullList.size
+        return listPullRequest.size
     }
 
     class MyViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
-        private val tittle: TextView by lazy { tittle }
-        private val description: TextView by lazy { description }
-        private val user: TextView by lazy { user }
-        private val image: ImageView by lazy { image }
-        private val sobrUser: TextView by lazy { sobrUser }
+        private val tittle: TextView by lazy { view.findViewById(R.id.Tittlerp) }
+        private val description: TextView by lazy { view.findViewById(R.id.Descriptionrp) }
+        private val user: TextView by lazy { view.findViewById(R.id.nmbreusserrp) }
+        private val image: ImageView by lazy { view.findViewById(R.id.usserimagerp) }
+        private val sobrUser: TextView by lazy { view.findViewById(R.id.sobrenmbreusserrp) }
 
         fun render(pullRequestModel: PullRequestModel) {
 
             tittle.text = pullRequestModel.title
             description.text = pullRequestModel.body
             user.text = pullRequestModel.userModel.login
-            sobrUser.text = pullRequestModel.title
+            sobrUser.text = pullRequestModel.userModel.login
             Glide.with(image)
                 .load(pullRequestModel.userModel.name)
                 .circleCrop()

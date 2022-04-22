@@ -3,6 +3,7 @@ package com.example.desafio.ui.view
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -12,18 +13,28 @@ import com.example.desafio.ui.view.adapters.PullRequestRvAdapter
 import com.example.desafio.ui.viewmodel.PullRequestViewModel
 
 
-class PullRequestActivity : AppCompatActivity(), PullRequestRvAdapter.OnPullClickListener {
+class PullRequestActivity : AppCompatActivity(){
 
     private val pullRequestViewModel: PullRequestViewModel by viewModels()
-    private lateinit var binding: ActivityPullRequestBinding
+    private val binding by lazy { ActivityPullRequestBinding.inflate(layoutInflater) }
+    private val pullRequestAdapter by lazy { PullRequestRvAdapter(onClickItem = PullRequestManager()) }
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityPullRequestBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         initData()
-        initRecyclerView()
+
+        pullRequestViewModel.pullModel.observe(this, Observer {
+
+            if (it.isNotEmpty()) {
+                pullRequestAdapter.setListPullRequest(it)
+            } else {
+                Toast.makeText(this, "La lista está vacia", Toast.LENGTH_LONG).show()
+            }
+        })
+        initAdapter()
 
 
     }
@@ -39,20 +50,20 @@ class PullRequestActivity : AppCompatActivity(), PullRequestRvAdapter.OnPullClic
 
     }
 
-    private fun initRecyclerView() {
 
-        pullRequestViewModel.pullModel.observe(this, Observer {
-            val mRecyclerView = binding.recyclerviewrp
-            val mLayoutManager = LinearLayoutManager(this)
-            val mAdapter = PullRequestRvAdapter(it)
-            mRecyclerView.layoutManager = mLayoutManager
-            mRecyclerView.adapter = mAdapter
-        })
+    private fun initAdapter() {
 
+        with(binding.recyclerviewrp){
+            layoutManager = LinearLayoutManager(this@PullRequestActivity)
+            adapter = pullRequestAdapter
+        }
 
     }
 
-    override fun onRepoClick(userModel: UserModel) {
-        //Action when clicks in any pull request of the list.
+    inner class PullRequestManager : PullRequestRvAdapter.pullItemClick {
+        override fun pullClick() {
+            Toast.makeText(this@PullRequestActivity, "Pull Click", Toast.LENGTH_LONG).show()
+        }
+
     }
 }
