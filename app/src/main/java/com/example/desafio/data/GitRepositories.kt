@@ -8,13 +8,11 @@ class GitRepositories {
 
     private val retroService = RetroService()
 
-    suspend fun getAllRepositores():List<RepositoriesModel>{
-        val response = retroService.getRepositories()
-        return response
+    suspend fun getAllRepositories(): List<RepositoriesModel> {
+        return retroService.getRepositories()
     }
 
-    suspend fun getAllPulls(user:String, repo:String):List<PullRequestModel>{
-        val response = retroService.getPulls(user, repo)
-        return response
+    suspend fun getAllPulls(user: String, repo: String): List<PullRequestModel> {
+        return retroService.getPulls(user, repo)
     }
 }

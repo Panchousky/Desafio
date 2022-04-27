@@ -17,7 +17,7 @@ class PullRequestViewModel : ViewModel() {
             val result = getPullRequestUseCase(user, repo)
 
             if (!result.isNullOrEmpty()) {
-               pullModel.postValue(result!!)
+               pullModel.postValue(result)
             }
         }
     }

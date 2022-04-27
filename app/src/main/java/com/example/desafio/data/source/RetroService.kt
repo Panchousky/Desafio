@@ -5,15 +5,15 @@ import com.example.desafio.data.model.PullRequestModel
 import com.example.desafio.data.model.RepositoriesModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
-import okhttp3.Dispatcher
 
 class RetroService {
 
     private val retrofit = RetrofitHelper.getRetrofit()
+    private val gitHubService = retrofit.create(GitHubApi::class.java)
 
     suspend fun getRepositories(): List<RepositoriesModel> {
         return withContext(Dispatchers.IO) {
-            val response = retrofit.create(RetrofitInstance::class.java).getRepositories()
+            val response = gitHubService.getRepositories()
             response.body()?.items ?: emptyList()
 
         }
@@ -21,7 +21,7 @@ class RetroService {
 
     suspend fun getPulls(user: String, repo: String): List<PullRequestModel> {
         return withContext(Dispatchers.IO) {
-            val response = retrofit.create(RetrofitInstance::class.java).getPullRequests(user, repo)
+            val response = gitHubService.getPullRequests(user, repo)
             response.body() ?: emptyList()
         }
 

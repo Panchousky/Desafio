@@ -22,7 +22,6 @@ class RepositoriesActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
 
-
         repositoriesViewModel.getRepositoriesList()
         repositoriesViewModel.repoModel.observe(this) { items ->
 
