@@ -63,14 +63,14 @@ class RepositoriesFragment : Fragment() {
     inner class RepositoriesManager : RepositoriesListRvAdapter.onClickItemListener {
         override fun onItemClick(owner: String, full_name: String) {
 
+            /*
             val bundle = Bundle()
             bundle.putString("full_name",full_name)
             bundle.putString("owner",owner)
-            val fragment = PullRequestFragment()
-            fragment.arguments = bundle
-            fragmentManager?.beginTransaction()?.replace(R.id.fragmentContainerView,fragment)?.commit()
+            */
 
-            //findNavController().navigate()
+            val action =  RepositoriesFragmentDirections.actionRepositoriesFragmentToPullRequestFragment(full_name,owner)
+            findNavController().navigate(action)
 
             /*val intent = Intent(this@MainActivity2Fragment, PullRequestActivity::class.java)
             intent.putExtra("login", owner)

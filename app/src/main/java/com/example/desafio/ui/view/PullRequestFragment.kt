@@ -9,6 +9,7 @@ import androidx.activity.viewModels
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.desafio.databinding.PullRequestFragmentBinding
 import com.example.desafio.ui.view.adapters.PullRequestRvAdapter
@@ -19,10 +20,8 @@ class PullRequestFragment: Fragment() {
     private val binding by lazy { PullRequestFragmentBinding.inflate(layoutInflater) }
     private val pullRequestAdapter by lazy { PullRequestRvAdapter(onClickItem = PullRequestManager()) }
     private val pullRequestViewModel: PullRequestViewModel by viewModels()
+    private val args by navArgs<PullRequestFragmentArgs>()
 
-    companion object {
-        fun newInstance() = PullRequestFragment()
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -35,12 +34,12 @@ class PullRequestFragment: Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         initData()
-        getAndSetDataByViewModel()
+        setDataByViewModel()
         initAdapter()
 
     }
 
-    private fun getAndSetDataByViewModel() {
+    private fun setDataByViewModel() {
         pullRequestViewModel.pullModel.observe(viewLifecycleOwner, Observer {
 
             if (it.isNotEmpty()) {
@@ -52,14 +51,8 @@ class PullRequestFragment: Fragment() {
     }
 
     private fun initData() {
-        val args = this.arguments
-        val name = args?.get("full_name")
-        val login = args?.get("owner")
 
-        if (name != null || login != null) {
-            pullRequestViewModel.getPullRequestList(login.toString(), name.toString())
-        }
-
+            pullRequestViewModel.getPullRequestList(args.repositoriesUser,args.repositoriesTitle )
 
     }
 

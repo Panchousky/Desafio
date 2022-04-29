@@ -16,7 +16,7 @@
             android:name=".ui.view.PullRequestActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.view.RepositoriesActivity"
+            android:name=".ui.view.HomeActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

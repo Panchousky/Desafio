@@ -23,7 +23,7 @@
             android:name="repositories_title"
             app:argType="string" />
         <argument
-            android:name="repositories_usser"
+            android:name="repositories_user"
             app:argType="string" />
     </fragment>
 </navigation>
