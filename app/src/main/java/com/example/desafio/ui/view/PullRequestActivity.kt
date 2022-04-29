@@ -17,7 +17,7 @@ class PullRequestActivity : AppCompatActivity(){
 
     private val pullRequestViewModel: PullRequestViewModel by viewModels()
     private val binding by lazy { ActivityPullRequestBinding.inflate(layoutInflater) }
-    private val pullRequestAdapter by lazy { PullRequestRvAdapter(onClickItem = PullRequestManager()) }
+
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -26,15 +26,6 @@ class PullRequestActivity : AppCompatActivity(){
 
         initData()
 
-        pullRequestViewModel.pullModel.observe(this, Observer {
-
-            if (it.isNotEmpty()) {
-                pullRequestAdapter.setListPullRequest(it)
-            } else {
-                Toast.makeText(this, "La lista está vacia", Toast.LENGTH_LONG).show()
-            }
-        })
-        initAdapter()
 
 
     }
@@ -51,19 +42,6 @@ class PullRequestActivity : AppCompatActivity(){
     }
 
 
-    private fun initAdapter() {
 
-        with(binding.recyclerviewrp){
-            layoutManager = LinearLayoutManager(this@PullRequestActivity)
-            adapter = pullRequestAdapter
-        }
 
-    }
-
-    inner class PullRequestManager : PullRequestRvAdapter.pullItemClick {
-        override fun pullClick() {
-            Toast.makeText(this@PullRequestActivity, "Pull Click", Toast.LENGTH_LONG).show()
-        }
-
-    }
 }

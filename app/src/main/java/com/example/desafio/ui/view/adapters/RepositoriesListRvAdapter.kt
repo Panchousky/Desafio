@@ -10,11 +10,11 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.desafio.data.model.RepositoriesModel
 import com.example.desafio.R
-import com.example.desafio.ui.view.RepositoriesActivity
+import com.example.desafio.ui.view.RepositoriesFragment
 
 
 class RepositoriesListRvAdapter(
-    private val onClickItem: RepositoriesActivity.RepositoriesManager
+    private val onClickItem: RepositoriesFragment.RepositoriesManager
 ) : RecyclerView.Adapter<RepositoriesListRvAdapter.MyViewHolder>() {
 
     private val list = mutableListOf<RepositoriesModel>()

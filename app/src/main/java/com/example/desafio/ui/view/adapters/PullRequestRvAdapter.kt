@@ -11,9 +11,10 @@ import com.example.desafio.data.model.UserModel
 import com.example.desafio.data.model.PullRequestModel
 import com.example.desafio.R
 import com.example.desafio.ui.view.PullRequestActivity
+import com.example.desafio.ui.view.PullRequestFragment
 
 class PullRequestRvAdapter(
-    private val onClickItem: PullRequestActivity.PullRequestManager
+    private val onClickItem: PullRequestFragment.PullRequestManager
 ) :
     RecyclerView.Adapter<PullRequestRvAdapter.MyViewHolder>() {
 
