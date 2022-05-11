@@ -8,7 +8,7 @@
         <entry key="..\:/Users/franc/AndroidStudioProjects/Desafio2/app/src/main/res/layout/activity_pull_request.xml" value="0.38697916666666665" />
         <entry key="..\:/Users/franc/AndroidStudioProjects/Desafio2/app/src/main/res/layout/pulrequestrow.xml" value="0.38697916666666665" />
         <entry key="..\:/Users/franc/AndroidStudioProjects/Desafio2/app/src/main/res/layout/rvrow.xml" value="0.599112426035503" />
-        <entry key="app/src/main/res/layout/activity_main.xml" value="0.360054347826087" />
+        <entry key="app/src/main/res/layout/activity_main.xml" value="0.25" />
         <entry key="app/src/main/res/layout/activity_main2.xml" value="0.335" />
         <entry key="app/src/main/res/layout/activity_pull_request.xml" value="0.360054347826087" />
         <entry key="app/src/main/res/layout/fragment_pull_request.xml" value="0.353125" />
@@ -20,9 +20,6 @@
         <entry key="app/src/main/res/layout/rvrow.xml" value="0.360054347826087" />
       </map>
     </option>
-  </component>
-  <component name="ProjectPlainTextFileTypeManager">
-    <file url="file://$PROJECT_DIR$/app/src/main/java/com/example/desafio/ui/view/MainActivity.kt" />
   </component>
   <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="11" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />

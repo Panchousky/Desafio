@@ -5,12 +5,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.fragment.FragmentNavigator
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.desafio.R
+import com.example.desafio.data.model.LiveDataModels
+import com.example.desafio.data.model.RepositoriesModel
 import com.example.desafio.databinding.RepositoriesFragmentBinding
 import com.example.desafio.ui.view.adapters.RepositoriesListRvAdapter
 import com.example.desafio.ui.viewmodel.RepositoriesViewModel
@@ -52,13 +53,35 @@ class RepositoriesFragment : Fragment() {
     private fun getAndSetDataByViewModel() {
         repositoriesViewModel.getRepositoriesList()
         repositoriesViewModel.repoModel.observe(viewLifecycleOwner) { items ->
-            if (items.isNotEmpty()) {
-                repositoriesAdapter.setList(items)
-            } else {
-                Toast.makeText(this.context, "La lista está vacia", Toast.LENGTH_LONG).show()
+
+            when (items) {
+                is LiveDataModels.Result.OnLoading -> onLoading()
+                is LiveDataModels.Result.OnSuccess -> onSuccess(items.value)
+                is LiveDataModels.Result.OnError -> onError()
             }
         }
     }
+
+    private fun onError() {
+
+    }
+
+    private fun onSuccess(list: List<RepositoriesModel>) {
+        if (list.isNotEmpty()) {
+            binding.repositoriesProgressBar.isVisible = false
+            repositoriesAdapter.setList(list)
+        } else {
+            binding.repositoriesProgressBar.isVisible = false
+            Toast.makeText(this.context, "La lista está vacia", Toast.LENGTH_LONG).show()
+        }
+
+    }
+
+
+    private fun onLoading() {
+
+    }
+
 
     inner class RepositoriesManager : RepositoriesListRvAdapter.onClickItemListener {
         override fun onItemClick(owner: String, full_name: String) {
@@ -69,7 +92,11 @@ class RepositoriesFragment : Fragment() {
             bundle.putString("owner",owner)
             */
 
-            val action =  RepositoriesFragmentDirections.actionRepositoriesFragmentToPullRequestFragment(full_name,owner)
+            val action =
+                RepositoriesFragmentDirections.actionRepositoriesFragmentToPullRequestFragment(
+                    full_name,
+                    owner
+                )
             findNavController().navigate(action)
 
             /*val intent = Intent(this@MainActivity2Fragment, PullRequestActivity::class.java)

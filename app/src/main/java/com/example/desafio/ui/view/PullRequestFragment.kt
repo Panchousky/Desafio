@@ -5,17 +5,18 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.activity.viewModels
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Observer
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.desafio.data.model.LiveDataModels
+import com.example.desafio.data.model.PullRequestModel
 import com.example.desafio.databinding.PullRequestFragmentBinding
 import com.example.desafio.ui.view.adapters.PullRequestRvAdapter
 import com.example.desafio.ui.viewmodel.PullRequestViewModel
 
-class PullRequestFragment: Fragment() {
+class PullRequestFragment : Fragment() {
 
     private val binding by lazy { PullRequestFragmentBinding.inflate(layoutInflater) }
     private val pullRequestAdapter by lazy { PullRequestRvAdapter(onClickItem = PullRequestManager()) }
@@ -40,25 +41,45 @@ class PullRequestFragment: Fragment() {
     }
 
     private fun setDataByViewModel() {
-        pullRequestViewModel.pullModel.observe(viewLifecycleOwner, Observer {
+        pullRequestViewModel.pullModel.observe(viewLifecycleOwner) { items ->
 
-            if (it.isNotEmpty()) {
-                pullRequestAdapter.setListPullRequest(it)
-            } else {
-                Toast.makeText(this.context, "La lista está vacia", Toast.LENGTH_LONG).show()
+            when (items) {
+                is LiveDataModels.Result.OnLoading -> onLoading()
+                is LiveDataModels.Result.OnSuccess -> onSuccess(items.value)
+                is LiveDataModels.Result.OnError -> onError()
             }
-        })
+
+        }
+    }
+
+    private fun onError() {
+
+    }
+
+    private fun onLoading() {
+
+    }
+
+    private fun onSuccess(list: List<PullRequestModel>) {
+        if (list.isNotEmpty()) {
+            binding.pullrequestProgressBar.isVisible = false
+            pullRequestAdapter.setListPullRequest(list)
+        } else {
+            binding.pullrequestProgressBar.isVisible = false
+            Toast.makeText(this.context, "La lista está vacia", Toast.LENGTH_LONG).show()
+        }
+
     }
 
     private fun initData() {
 
-            pullRequestViewModel.getPullRequestList(args.repositoriesUser,args.repositoriesTitle )
+        pullRequestViewModel.getPullRequestList(args.repositoriesUser, args.repositoriesTitle)
 
     }
 
     private fun initAdapter() {
 
-        with(binding.recyclerviewrp){
+        with(binding.recyclerviewrp) {
             layoutManager = LinearLayoutManager(this.context)
             adapter = pullRequestAdapter
         }
@@ -67,7 +88,7 @@ class PullRequestFragment: Fragment() {
 
     inner class PullRequestManager : PullRequestRvAdapter.pullItemClick {
         override fun pullClick() {
-           //to do
+            //to do
         }
 
     }
