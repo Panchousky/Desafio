@@ -6,30 +6,28 @@ import androidx.lifecycle.viewModelScope
 import com.example.desafio.data.model.LiveDataModels
 import com.example.desafio.data.model.PullRequestModel
 import com.example.desafio.domain.GetPullRequestUseCase
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class PullRequestViewModel : ViewModel() {
     val pullModel = MutableLiveData<LiveDataModels.Result<List<PullRequestModel>>>()
     val getPullRequestUseCase = GetPullRequestUseCase()
-    //val loadingData = MutableLiveData<Boolean>()
 
-
-    // integrar sealed class, integrar un solo live data por operador.
+    //integrar inyeccion de dependencias (Koin,Hilt o Dagger)
     fun getPullRequestList(user: String, repo: String) {
-
-        pullModel.postValue(LiveDataModels.Result.OnLoading())
-
-        viewModelScope.launch {
-           // loadingData.postValue(true)
+        viewModelScope.launch(Dispatchers.Main) {
+            pullModel.postValue(LiveDataModels.Result.OnLoading())
             runCatching {
-                getPullRequestUseCase(user, repo)
+                withContext(Dispatchers.IO){
+                    getPullRequestUseCase(user, repo)
+                }
             }.onSuccess { result ->
                 val answer = LiveDataModels.Result.OnSuccess(result)
                 pullModel.postValue(answer)
             }.onFailure { e ->
                 pullModel.postValue(LiveDataModels.Result.OnError(e))
             }
-
         }
     }
 
